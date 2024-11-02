@@ -1,0 +1,1 @@
+docker-compose -p search_engine_spider -f docker/docker-compose.yml up -d

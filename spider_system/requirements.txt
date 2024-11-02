@@ -1,0 +1,19 @@
+fastapi
+uvicorn
+scrapy
+elasticsearch
+elasticsearch-dsl
+# celery
+transformers
+sentence-transformers
+torch
+# modelscope
+
+# bs4
+scrapy-playwright
+fake_useragent
+
+newspaper3k
+textblob
+
+psutil

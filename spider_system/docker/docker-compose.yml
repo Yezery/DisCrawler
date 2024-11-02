@@ -1,0 +1,57 @@
+services:
+  # redis:
+  #   image: redis:7
+  #   container_name: redis
+  #   ports:
+  #     - 16379:6379
+  #   volumes:
+  #     - ./redis/conf/redis.conf:/etc/redis/redis.conf
+  #     - ./redis/data:/var/lib/redis
+  #     - ./redis/logs:/logs
+  #   networks:
+  #     - elastic
+    # restart: always
+
+  elasticsearch:
+    image: elasticsearch:8.15.2
+    container_name: elasticsearch
+    privileged: true
+    environment:
+      - node.name=es01
+      - cluster.name=es-docker-cluster
+      - discovery.type=single-node
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      - "cluster.routing.allocation.disk.watermark.low=90%"
+      - "cluster.routing.allocation.disk.watermark.high=95%"
+      - "cluster.routing.allocation.disk.watermark.flood_stage=97%"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - /Volumes/Ziv_Ye_Desk/dockerVolume/data:/usr/share/elasticsearch/data
+      - ./elasticsearch/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
+    ports:
+      - 9200:9200
+      - 9300:9300
+    networks:
+      - es-net             
+      # restart: always
+
+  kibana:
+      image: kibana:8.15.2
+      container_name: kibana
+      environment:
+        - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
+      depends_on:
+        - elasticsearch
+      networks:
+        - es-net             
+      ports:
+        - 5601:5601
+      # restart: always
+
+networks:
+  es-net:
+    driver: bridge
