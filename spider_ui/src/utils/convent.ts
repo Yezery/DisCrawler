@@ -9,4 +9,26 @@ const covent_time = (time: string) => {
   const second = date.getSeconds()
   return `${year}-${month.toString().padStart(2, '0')}-${day} ${hour}:${minute}:${second}`
 }
-export { covent_time }
+
+function applyStyles(el: HTMLElement, cssString: string) {
+  const styles: Record<string, string> = {}
+  cssString = cssString.replace(/[{}]/g, '').replace(/\n/g, '').trim()
+  cssString
+    .trim()
+    .split(';')
+    .forEach(style => {
+      if (style) {
+        const [key, value] = style.split(':').map(s => s.trim())
+        if (key && value) {
+          const camelCaseKey = key.replace(/-([a-z])/g, (_, letter) =>
+            letter.toUpperCase(),
+          )
+          styles[camelCaseKey] = value
+        }
+      }
+    })
+  Object.entries(styles).forEach(([key, value]) => {
+    el.style.setProperty(key.replace(/([A-Z])/g, '-$1').toLowerCase(), value)
+  })
+}
+export { covent_time, applyStyles }

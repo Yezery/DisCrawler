@@ -5,7 +5,7 @@
 </template>
 
 <script lang="ts" setup>
-import { getDataCounts } from '@/api/stats'
+import { getDataCounts } from '@/api/csdn'
 import * as echarts from 'echarts'
 import { onMounted, onBeforeUnmount, ref, onUnmounted } from 'vue'
 const loading = ref(false)
@@ -131,16 +131,16 @@ const interval = ref()
 onMounted(() => {
   loading.value = true
   getDataCounts().then(re => {
-    xData.value = re.data.xAxis
-    chartOptions.value.series[0].data = re.data.data
+    xData.value = re.data.data.xAxis
+    chartOptions.value.series[0].data = re.data.data.data
     DrawWordCloud()
     loading.value = false
   })
 
   interval.value = setInterval(() => {
     getDataCounts().then(re => {
-      xData.value = re.data.xAxis
-      chartOptions.value.series[0].data = re.data.data
+      xData.value = re.data.data.xAxis
+      chartOptions.value.series[0].data = re.data.data.data
       DrawWordCloud()
     })
   }, 5000)

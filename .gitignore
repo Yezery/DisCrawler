@@ -1,0 +1,5 @@
+.DS_Store
+spider_system/.DS_Store
+spider_system/docker/.DS_Store
+spider_system/search_scrapy/.DS_Store
+/__pycache__/

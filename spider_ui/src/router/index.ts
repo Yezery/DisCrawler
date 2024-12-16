@@ -18,24 +18,29 @@ const router = createRouter({
         {
           path: 'datas',
           name: 'datas',
-          component: () => import('../components/scrapyData/selectScrapy.vue'),
+          component: () => import('../components/scrapyData/SelectScrapy.vue'),
         },
         {
           path: 'csdnData',
           name: 'csdnData',
-          component: () => import('../components/scrapyData/csdnData.vue'),
+          component: () => import('../components/scrapyData/CsdnData.vue'),
+        },
+        {
+          path: 'bossData',
+          name: 'bossData',
+          component: () => import('../components/scrapyData/BossData.vue'),
         },
       ],
     },
     {
       path: '/dashBoard',
       name: 'dashBoard',
-      component: () => import('../views/dashBoard.vue'),
+      component: () => import('../views/DashBoard.vue'),
     },
     {
-      path: '/scrapyTest',
-      name: 'scrapyTest',
-      component: () => import('../views/scrapyTest.vue'),
+      path: '/application',
+      name: 'application',
+      component: () => import('../views/ApplicationView.vue'),
     },
 
     // {

@@ -224,14 +224,19 @@ import {
   CircleStackIcon,
   SignalIcon,
   XMarkIcon,
-  ShieldCheckIcon,
+  Squares2X2Icon,
 } from '@heroicons/vue/24/outline'
 import { upperCase } from 'lodash'
 
 const navigation = ref([
   { name: '概述', href: '/home', icon: ChartBarIcon, current: true },
   { name: '控制台', href: '/dashBoard', icon: SignalIcon, current: false },
-  { name: '测试', href: '/scrapyTest', icon: ShieldCheckIcon, current: false },
+  {
+    name: '应用',
+    href: '/application',
+    icon: Squares2X2Icon,
+    current: false,
+  },
 ])
 watch(route, to => {
   const result = to.fullPath.split('/').slice(0, 2).join('/')

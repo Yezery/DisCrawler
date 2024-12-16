@@ -101,25 +101,25 @@ FEED_EXPORT_ENCODING = "utf-8"
 # DUPEFILTER_CLASS = "scrapy_redis.dupefilter.RFPDupeFilter"
 
 # #公共管道
-ITEM_PIPELINES  =  {
-    'search_scrapy.pipelines.CSDNScrapyPipeline':300,   
-}
+# ITEM_PIPELINES  =  {
+#     'search_scrapy.pipelines.CSDNScrapyPipeline':300,   
+#     'search_scrapy.pipelines.BOSSScrapyPipeline':300,
+# }
 # # 3.指定连接到Redis时要使用的主机和端口。  必须
 # REDIS_HOST = 'localhost'
 # REDIS_PORT = 16379
 # 不清理redis队列，允许暂停/恢复抓取。
 # 可选  允许暂定,redis数据不丢失
 # SCHEDULER_PERSIST = True
-
 DOWNLOAD_HANDLERS = {
     "http": "scrapy_playwright.handler.ScrapyPlaywrightDownloadHandler",
     "https": "scrapy_playwright.handler.ScrapyPlaywrightDownloadHandler",
 }
-
 PLAYWRIGHT_LAUNCH_OPTIONS = {
-    "headless": True,
+    "headless": False,
     "timeout": 20 * 1000,  # 20 秒
 }
+PLAYWRIGHT_BROWSER_TYPE = "chromium"
 ROBOTSTXT_OBEY = False
 LOG_LEVEL = 'INFO'
 

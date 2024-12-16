@@ -2,7 +2,7 @@ import request from '@/utils/request'
 
 const getSpiderList = () => {
   return request({
-    url: '/spider/list',
+    url: '/system/spider/list',
     method: 'get',
   })
 }
@@ -12,7 +12,7 @@ interface stopSpiderRequest {
 }
 const stopSpider = (data: stopSpiderRequest) => {
   return request({
-    url: '/spider/stop',
+    url: '/system/spider/stop',
     method: 'post',
     data: data,
   })
@@ -20,10 +20,12 @@ const stopSpider = (data: stopSpiderRequest) => {
 
 interface startSpiderRequest {
   spider_name: string
+  spider_args: Record<string, string>
+  description:string
 }
 const startSpider = (data: startSpiderRequest) => {
   return request({
-    url: '/spider/start',
+    url: '/system/spider/start',
     method: 'post',
     data: data,
   })
@@ -31,7 +33,7 @@ const startSpider = (data: startSpiderRequest) => {
 
 const getSpiderSupport = () => {
   return request({
-    url: '/spider/support',
+    url: '/system/spider/support',
     method: 'get',
   })
 }

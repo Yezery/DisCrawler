@@ -4,37 +4,3 @@
 :focus-visible {
   outline: none; /* 禁用轮廓 */
 }
-.loading-overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 999;
-}
-
-.spinner {
-  border: 8px solid white; /* 浅灰色 */
-  border-top: 8px solid #eeedeb; /* 蓝色 */
-  border-radius: 50%;
-  width: 40px;
-  height: 40px;
-  animation: spin 1s linear infinite;
-}
-
-@keyframes spin {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
-}
-
-/* 确保父元素相对定位 */
-.parent-element {
-  position: relative;
-}

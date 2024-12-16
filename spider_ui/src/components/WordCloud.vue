@@ -5,16 +5,30 @@
 </template>
 
 <script setup lang="ts">
-import { getWordCloud } from '@/api/stats'
+import { toRefs } from 'vue'
+
 import * as echarts from 'echarts'
 import 'echarts-wordcloud'
 import {
-  onBeforeMount,
+  // onBeforeMount,
   onMounted,
   ref,
-  onBeforeUnmount,
-  onUnmounted,
+  watch,
+  // onBeforeUnmount,
+  // onUnmounted,
 } from 'vue'
+interface WordCloudData {
+  name: string
+  value: number
+}
+const props = defineProps({
+  data: {
+    type: Array<WordCloudData>,
+    default: () => [],
+  },
+})
+const { data } = toRefs(props)
+
 const mychart = ref()
 function DrawWordCloud() {
   // 词云
@@ -99,44 +113,36 @@ function DrawWordCloud() {
       },
 
       /**
-	 * 词云数据，必须是一个数组，每个数组项必须有name和value属性
-	 * 设置单个文本的样式：  textStyle
-	 *
-	 * 例：{
-					name: '',
-					value: 40,
-					textStyle: {
-					}
-				},
-	 */
+       * 词云数据，必须是一个数组，每个数组项必须有name和value属性
+       * 设置单个文本的样式：  textStyle
+       */
       data: data.value,
     },
   })
+  loading.value = false
 }
 const loading = ref(false)
-const data = ref([])
-const interval = ref()
+// const interval = ref()
 onMounted(() => {
   loading.value = true
-  getWordCloud().then(res => {
-    data.value = res.data
-    DrawWordCloud()
-    loading.value = false
-  })
 })
-onBeforeMount(() => {
-  interval.value = setInterval(() => {
-    getWordCloud().then(res => {
-      data.value = res.data
-      DrawWordCloud()
-      loading.value = false
-    })
-  }, 10000)
+watch(data, () => {
+  DrawWordCloud()
 })
-onBeforeUnmount(() => {
-  clearInterval(interval.value)
-})
-onUnmounted(() => {
-  clearInterval(interval.value)
-})
+
+// onBeforeMount(() => {
+//   interval.value = setInterval(() => {
+//     getWordCloud().then(res => {
+//       data.value = res.data.data
+//       DrawWordCloud()
+//       loading.value = false
+//     })
+//   }, 10000)
+// })
+// onBeforeUnmount(() => {
+//   clearInterval(interval.value)
+// })
+// onUnmounted(() => {
+//   clearInterval(interval.value)
+// })
 </script>

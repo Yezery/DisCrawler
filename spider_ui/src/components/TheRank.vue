@@ -1,5 +1,5 @@
 <template>
-  <div class="w-full h-full">
+  <div class="w-full h-full" v-loading="loading">
     <div
       v-for="(rank, rankIdx) in ranks"
       :key="rankIdx"
@@ -54,7 +54,7 @@ import {
   getCollectCount,
   getReadCount,
   getBlogDiggNum,
-} from '@/api/stats'
+} from '@/api/csdn'
 import { ref, toRefs, watch } from 'vue'
 const loading = ref(false)
 const props = defineProps({
@@ -73,25 +73,25 @@ watch(
     switch (n) {
       case 0:
         getRanked().then(re => {
-          ranks.value = re.data
+          ranks.value = re.data.data
           loading.value = false
         })
         break
       case 1:
         getBlogDiggNum().then(re => {
-          ranks.value = re.data
+          ranks.value = re.data.data
           loading.value = false
         })
         break
       case 2:
         getReadCount().then(re => {
-          ranks.value = re.data
+          ranks.value = re.data.data
           loading.value = false
         })
         break
       case 3:
         getCollectCount().then(re => {
-          ranks.value = re.data
+          ranks.value = re.data.data
           loading.value = false
         })
         break

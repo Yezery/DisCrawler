@@ -2,7 +2,7 @@ import request from '@/utils/request'
 
 const getSystemInfo = () => {
   return request({
-    url: '/system_info',
+    url: '/system/system_info',
     method: 'get',
   })
 }

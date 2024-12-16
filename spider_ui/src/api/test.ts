@@ -6,7 +6,7 @@ interface SearchRequest {
 
 const searchAPI = (data: SearchRequest) => {
   return request({
-    url: '/search',
+    url: '/csdn/search',
     method: 'post',
     data: data,
   })

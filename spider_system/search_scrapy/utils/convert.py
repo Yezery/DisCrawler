@@ -42,6 +42,3 @@ def convert_to_timestamp(text):
 #     article.parse()
 #     return article.text
 
-
-def bytesToGB(byte):
-    return (byte / (1024 * 1024 * 1024)).__round__(2)

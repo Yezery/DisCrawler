@@ -3,7 +3,7 @@ from textblob import TextBlob
 
 # 使用 Hugging Face 的模型，将句子转化为向量
 def get_sentence_embedding(text,model_path="search_scrapy/models/all-MiniLM-L6-v2"):
-    model = SentenceTransformer(model_path)
+    model = SentenceTransformer(model_path,device="cpu")
     """
     使用预训练模型将文本转换为语义向量。
     """

@@ -1,0 +1,2 @@
+class WebsiteCount:
+    count : int

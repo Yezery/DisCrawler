@@ -4,6 +4,8 @@ import scrapy
 from scrapy.http import Response
 from playwright.async_api import Page
 
+from search_scrapy.pipelines import CSDNScrapyPipeline
+
 from ..utils.fake_agent import get_android_agent
 from ..utils.nlp_transformers import get_sentiment
 from ..utils.convert import convert_to_number, convert_to_timestamp
@@ -13,7 +15,11 @@ import re
 class WebsiteScrapySpider(scrapy.Spider):
     start_urls = ["https://blog.csdn.net/"]
     name = "csdn_website_scrapy"
-
+    custom_settings = {
+        'ITEM_PIPELINES': {
+          'search_scrapy.pipelines.CSDNScrapyPipeline':300,
+        }
+    }
     # 初始化一个集合来存储所有链接
     all_links = set()
 
@@ -122,10 +128,6 @@ class WebsiteScrapySpider(scrapy.Spider):
 
         # 计算情感得分
         sentiment_score = get_sentiment(blog_text)
-        # 打印爬到的所有数据
-        print(
-            f"link:{link},read_count: {read_count}, create_time: {create_time}, span_count: {span_count}, collection_count: {collection_count}, categorys: {categorys}, sentiment_score: {sentiment_score}"
-        )
         yield {
                 "link": link,
                 "text": blog_text,

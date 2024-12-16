@@ -50,7 +50,7 @@
           <TheTimeCount></TheTimeCount>
         </div>
         <div class="w-96 h-80 mt-3">
-          <WordCloud></WordCloud>
+          <WordCloud :data="data" />
         </div>
       </div>
     </div>
@@ -59,13 +59,15 @@
 
 <script lang="ts" setup>
 import { onMounted, ref, onBeforeUnmount } from 'vue'
-import { getWebsiteCount } from '@/api/stats'
+import { getWebsiteCount } from '@/api/csdn'
 import WordCloud from '@/components/WordCloud.vue'
 import TheRank from '@/components/TheRank.vue'
 import TheTimeCount from '@/components/TheTimeCount.vue'
+import { getWordCloud } from '@/api/csdn'
 const WebsiteCount = ref(0)
 const interval = ref()
 const currentSelect = ref(0)
+const data = ref([])
 const options = [
   {
     value: 0,
@@ -86,13 +88,16 @@ const options = [
 ]
 onMounted(() => {
   getWebsiteCount().then(re => {
-    WebsiteCount.value = re.data
+    WebsiteCount.value = re.data.data
   })
   interval.value = setInterval(() => {
     getWebsiteCount().then(re => {
-      WebsiteCount.value = re.data
+      WebsiteCount.value = re.data.data
     })
   }, 5000)
+  getWordCloud().then(res => {
+    data.value = res.data.data
+  })
 })
 onBeforeUnmount(() => {
   clearInterval(interval.value)

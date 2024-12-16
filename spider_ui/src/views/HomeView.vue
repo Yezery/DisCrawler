@@ -31,7 +31,7 @@ watch(
   <div class="mx-auto max-w-2xl lg:max-w-7xl animate__animated animate__fadeIn">
     <div class="flex p-px lg:col-span-4 justify-center items-center">
       <div class="w-full h-full">
-        <div class="breadcrumbs text-sm mt-5 ml-10 mb-5">
+        <div class="breadcrumbs text-sm mt-5 ml-10">
           <ul>
             <li v-for="tab in tabs" :key="tab.href">
               <RouterLink :to="tab.href">{{ upperCase(tab.name) }}</RouterLink>

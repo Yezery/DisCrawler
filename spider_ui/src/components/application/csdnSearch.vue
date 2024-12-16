@@ -16,7 +16,7 @@
       </TransitionChild>
 
       <div
-        class="fixed inset-0 z-10 w-screen overflow-y-auto p-4 sm:p-6 md:p-20"
+        class="fixed inset-0 z-10 w-screen overflow-y-auto p-36 sm:p-36 md:p-36"
       >
         <TransitionChild
           as="template"
@@ -75,15 +75,9 @@
                           active && 'bg-gray-100 text-gray-900 outline-none',
                         ]"
                       >
-                        <!-- <img :src="person.imageUrl" alt="" class="h-6 w-6 flex-none rounded-full" /> -->
                         <span class="ml-3 flex-auto truncate">{{
                           result.title
                         }}</span>
-                        <ChevronRightIcon
-                          v-if="active"
-                          class="ml-3 h-5 w-5 flex-none text-gray-400"
-                          aria-hidden="true"
-                        />
                       </div>
                     </ComboboxOption>
                   </div>
@@ -146,10 +140,6 @@
                 v-if="query !== '' && results.length === 0"
                 class="px-6 py-14 text-center text-sm sm:px-14"
               >
-                <UsersIcon
-                  class="mx-auto h-6 w-6 text-gray-400"
-                  aria-hidden="true"
-                />
                 <p class="mt-4 font-semibold text-gray-900">无数据</p>
                 <p class="mt-2 text-gray-500">请更换关键词,再重试.</p>
               </div>
@@ -206,7 +196,7 @@ watch(query, n => {
     timer.value = setTimeout(() => {
       // #函数防抖
       searchAPI({ query: n }).then(res => {
-        results.value = res.data.results
+        results.value = res.data.data
       })
     }, 200)
   }

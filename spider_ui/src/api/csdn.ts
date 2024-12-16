@@ -1,50 +1,50 @@
 import request from '@/utils/request'
-
+const prefix = '/csdn'
 const getWebsiteCount = () => {
   return request({
-    url: '/getWebsiteCount',
+    url: `${prefix}/getWebsiteCount`,
     method: 'get',
   })
 }
 
 const getWordCloud = () => {
   return request({
-    url: '/getWordCloud',
+    url: `${prefix}/getWordCloud`,
     method: 'get',
   })
 }
 
 const getRanked = () => {
   return request({
-    url: '/getRanked',
+    url: `${prefix}/getRanked`,
     method: 'get',
   })
 }
 
 const getReadCount = () => {
   return request({
-    url: '/getReadCount',
+    url: `${prefix}/getReadCount`,
     method: 'get',
   })
 }
 
 const getBlogDiggNum = () => {
   return request({
-    url: '/getBlogDiggNum',
+    url: `${prefix}/getBlogDiggNum`,
     method: 'get',
   })
 }
 
 const getCollectCount = () => {
   return request({
-    url: '/getCollectCount',
+    url: `${prefix}/getCollectCount`,
     method: 'get',
   })
 }
 
 const getDataCounts = () => {
   return request({
-    url: '/getDataCounts',
+    url: `${prefix}/getDataCounts`,
     method: 'get',
   })
 }

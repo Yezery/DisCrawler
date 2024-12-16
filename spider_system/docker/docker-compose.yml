@@ -1,17 +1,4 @@
 services:
-  # redis:
-  #   image: redis:7
-  #   container_name: redis
-  #   ports:
-  #     - 16379:6379
-  #   volumes:
-  #     - ./redis/conf/redis.conf:/etc/redis/redis.conf
-  #     - ./redis/data:/var/lib/redis
-  #     - ./redis/logs:/logs
-  #   networks:
-  #     - elastic
-    # restart: always
-
   elasticsearch:
     image: elasticsearch:8.15.2
     container_name: elasticsearch
@@ -30,7 +17,6 @@ services:
         soft: -1
         hard: -1
     volumes:
-      - /Volumes/Ziv_Ye_Desk/dockerVolume/data:/usr/share/elasticsearch/data
       - ./elasticsearch/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
     ports:
       - 9200:9200

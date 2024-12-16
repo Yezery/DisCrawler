@@ -3,7 +3,9 @@
 # See documentation in:
 # https://docs.scrapy.org/en/latest/topics/spider-middleware.html
 import asyncio
+import random
 from scrapy.http import Request
+import requests
 from scrapy import signals
 
 # useful for handling different item types with a single interface
@@ -103,21 +105,68 @@ class SearchScrapyDownloaderMiddleware:
     def spider_opened(self, spider):
         spider.logger.info("Spider opened: %s" % spider.name)
 
-  
+import requests
+from scrapy import signals
+from scrapy.exceptions import IgnoreRequest
 
+class ProxyMiddleware:
+    def __init__(self):
+        self.proxy_url = "https://proxy.zivye.asia/get/"
+        self.delete_url = "https://proxy.zivye.asia/delete/?proxy={}"
+    
+    @classmethod
+    def from_crawler(cls, crawler):
+        # 实例化中间件
+        s = cls()
+        crawler.signals.connect(s.spider_opened, signal=signals.spider_opened)
+        return s
 
-# class ProxyMiddleware:
-#     async def get_proxy(self):
-#         proxies = asyncio.Queue()
-#         broker = Broker(proxies)
-#         await broker.find(types=['HTTP', 'HTTPS'], limit=1)
-#         proxy = await proxies.get()
-#         if proxy:
-#             return f'{proxy.host}:{proxy.port}'
-#         return None
+    def spider_opened(self, spider):
+        spider.logger.info("ProxyMiddleware initialized.")
 
-#     async def process_request(self, request:Request, spider):
-#         proxy = await self.get_proxy()
-#         if proxy:
-#             request.meta['proxy'] = f'http://{proxy}'
-#             spider.log(f'Using proxy: {proxy}')
+    def get_proxy(self):
+        """从代理池获取一个代理"""
+        try:
+            response = requests.get(self.proxy_url, timeout=5)
+            proxy = response.json().get("proxy")
+            return proxy
+        except Exception as e:
+            return None
+
+    def delete_proxy(self, proxy):
+        """从代理池删除失效代理"""
+        try:
+            requests.get(self.delete_url.format(proxy), timeout=5)
+        except Exception as e:
+            pass
+
+    def process_request(self, request, spider):
+        """为每个请求设置代理"""
+        proxy = self.get_proxy()
+        if proxy:
+            spider.logger.info(f"Using proxy: {proxy}")
+            request.meta['proxy'] = f"http://{proxy}"
+        else:
+            spider.logger.warning("No proxy available!")
+
+    def process_response(self, request, response, spider):
+        """处理代理返回的响应"""
+        if response.status != 200:  # 如果响应码不是 200，认为代理失效
+            proxy = request.meta.get('proxy')
+            if proxy:
+                spider.logger.warning(f"Deleting invalid proxy: {proxy}")
+                self.delete_proxy(proxy.replace("http://", ""))
+            raise IgnoreRequest(f"Invalid response with status {response.status}")
+        return response
+
+    def process_exception(self, request, exception, spider):
+        """捕获请求异常并切换代理"""
+        proxy = request.meta.get('proxy')
+        if proxy:
+            spider.logger.warning(f"Removing failed proxy: {proxy}")
+            self.delete_proxy(proxy.replace("http://", ""))
+        # 返回新的请求以重新尝试
+        new_request = request.copy()
+        new_request.meta['proxy'] = f"http://{self.get_proxy()}"
+        return new_request
+

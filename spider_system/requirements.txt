@@ -3,17 +3,14 @@ uvicorn
 scrapy
 elasticsearch
 elasticsearch-dsl
-# celery
 transformers
 sentence-transformers
 torch
-# modelscope
-
-# bs4
 scrapy-playwright
+playwright
 fake_useragent
-
-newspaper3k
 textblob
-
+python-dotenv
 psutil
+colorama
+python-dotenv

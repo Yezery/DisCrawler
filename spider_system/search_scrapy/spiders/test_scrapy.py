@@ -7,7 +7,7 @@ class TestScrapySpider(scrapy.Spider):
     name = "test_scrapy"
     # allowed_domains = ["blog.csdn.net"]
     start_urls = [
-        "https://blog.csdn.net/weixin_61908666/article/details/143269316"
+        "https://www.zhipin.com/web/geek/job?query=&city=101281600"
     ]
 
     def start_requests(self):
@@ -29,29 +29,29 @@ class TestScrapySpider(scrapy.Spider):
        # 等待页面加载
         await page.wait_for_load_state('networkidle')
         
-        tag = await page.query_selector("#article > div.creat-time-box > div > p:nth-child(1) > span")
-        read_count = await tag.inner_text() if tag else "N/A"  # 使用 await 获取文本内容
+        # tag = await page.query_selector("#article > div.creat-time-box > div > p:nth-child(1) > span")
+        # read_count = await tag.inner_text() if tag else "N/A"  # 使用 await 获取文本内容
 
-        tag = await page.query_selector('#article > div.creat-time-box > span.creat-time > span')
-        create_time = await tag.inner_text() if tag else "N/A"
+        # tag = await page.query_selector('#article > div.creat-time-box > span.creat-time > span')
+        # create_time = await tag.inner_text() if tag else "N/A"
 
-        tag = await page.query_selector('#operate > div.clearfix.content-box > div.like-btn.operate_heart.operate_common.floatL > span > span.count')
-        span_count = await tag.inner_text() if tag else "N/A"
+        # tag = await page.query_selector('#operate > div.clearfix.content-box > div.like-btn.operate_heart.operate_common.floatL > span > span.count')
+        # span_count = await tag.inner_text() if tag else "N/A"
 
-        tag = await page.query_selector('#operate > div.clearfix.content-box > div.collect-btn.operate_add.operate_common.floatL > span > span.count')
-        collection_count = await tag.inner_text() if tag else "N/A"
+        # tag = await page.query_selector('#operate > div.clearfix.content-box > div.collect-btn.operate_add.operate_common.floatL > span > span.count')
+        # collection_count = await tag.inner_text() if tag else "N/A"
 
-        categorys_tmp =await page.query_selector_all("#operate > div.search-tag-box > a")
-        categorys = []
-        for category in categorys_tmp:
-            category_name = await category.inner_text()
-            categorys.append(category_name)
+        # categorys_tmp =await page.query_selector_all("#operate > div.search-tag-box > a")
+        # categorys = []
+        # for category in categorys_tmp:
+        #     category_name = await category.inner_text()
+        #     categorys.append(category_name)
 
-        title_tmp = await page.query_selector("#articleContentId > span.tit")
-        title = await title_tmp.inner_text() if title_tmp else "N/A"
+        # title_tmp = await page.query_selector("#articleContentId > span.tit")
+        # title = await title_tmp.inner_text() if title_tmp else "N/A"
         
         
-        sentiment_score = get_sentiment("The product is really good and I like it.")
+        # sentiment_score = get_sentiment("The product is really good and I like it.")
         # yield{
         #     "crawl_time": time.time(),
         #     "create_time": convert_to_timestamp(create_time),
@@ -63,7 +63,7 @@ class TestScrapySpider(scrapy.Spider):
         # }
         
 
-        await page.wait_for_selector('#get-collection', timeout=60000)
+        # await page.wait_for_selector('#get-collection', timeout=60000)
         
        
     async def errback_close_page(self, failure):
